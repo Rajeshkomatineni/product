@@ -1,0 +1,21 @@
+1. Create a GitHub repository to share the answer to Q3. Q1 and Q2 can be
+answered using a word file or a pdf. In the same word/pdf file, give the link to the
+GitHub repo.
+2. In case of doubts, contact Jordi (WhatsApp +34661216995)
+Q1. We have an online store with items organized in categories, sub-categories, and
+sub-sub-categories up to N levels. Draw the database structure for the online store
+with the category tree to store things. Each category has a name. The number and
+level of categories can go up to infinite.
+Write a query to fetch all the first-level children (categories+items) for a category.
+Write a query to fetch all the children (categories+items) at all category levels for a
+category.
+Q2. Write the REST API endpoints for products consisting of (id, name, price) where
+the price is in dollars.
+The products now consist of (id, name, price, currency).
+Define how will you apply this change, considering that
+-API is in production.
+-Other clients are using the existing API.
+If you choose to version the API, write at a high level how the change will affect
+controllers, services, entities, etc.
+Q3. Create the REST API crud (create, read, update, delete) operations using flask
+for Q2.
