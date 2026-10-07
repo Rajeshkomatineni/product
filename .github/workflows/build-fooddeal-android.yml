@@ -1,4 +1,4 @@
-name: Build FoodDeal Android Install Test
+name: Build FoodDeal Android Companion
 on:
   workflow_dispatch:
   push:
@@ -43,6 +43,6 @@ jobs:
           $ANDROID_HOME/build-tools/35.0.0/apksigner verify --verbose fooddeal-android/app/build/outputs/apk/release/app-release.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: FoodDeal-Install-Test-v1.0.3
+          name: FoodDeal-Companion-v1.0.3-real
           path: fooddeal-android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
