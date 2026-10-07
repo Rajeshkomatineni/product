@@ -5,6 +5,7 @@ import android.accessibilityservice.AccessibilityServiceInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import java.net.HttpURLConnection
 import java.net.URL
@@ -22,9 +23,9 @@ class FoodDealAccessibilityService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         serviceInfo = serviceInfo.apply {
-            eventTypes = AccessibilityServiceInfo.TYPE_WINDOW_STATE_CHANGED or
-                    AccessibilityServiceInfo.TYPE_WINDOW_CONTENT_CHANGED or
-                    AccessibilityServiceInfo.TYPE_VIEW_TEXT_CHANGED
+            eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED or
+                    AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED or
+                    AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED
             feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
             flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS or
                     AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
