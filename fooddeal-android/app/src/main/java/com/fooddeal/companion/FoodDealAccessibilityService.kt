@@ -153,7 +153,7 @@ class FoodDealAccessibilityService : AccessibilityService() {
     }
 
     private fun escapeJson(value: String) =
-        value.replace("\\", "\\\\").replace(""", "\"")
+        value.replace("\\", "\\\\").replace("\"", "\\\"")
 
     override fun onInterrupt() {}
 }
