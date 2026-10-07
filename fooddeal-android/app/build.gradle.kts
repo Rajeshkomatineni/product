@@ -6,11 +6,11 @@ android {
     namespace = "com.fooddeal.companion"
     compileSdk = 35
     defaultConfig {
-        applicationId = "com.fooddeal.companion"
+        applicationId = "com.fooddeal.companion.v101"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 3
+        versionName = "1.0.2"
     }
     signingConfigs {
         create("release") {
