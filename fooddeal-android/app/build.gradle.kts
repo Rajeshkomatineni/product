@@ -9,8 +9,29 @@ android {
         applicationId = "com.fooddeal.companion"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.0.1"
+    }
+    signingConfigs {
+        create("release") {
+            val keystorePath = project.findProperty("RELEASE_STORE_FILE")?.toString()
+            val storePassword = project.findProperty("RELEASE_STORE_PASSWORD")?.toString()
+            val keyAlias = project.findProperty("RELEASE_KEY_ALIAS")?.toString()
+            val keyPassword = project.findProperty("RELEASE_KEY_PASSWORD")?.toString()
+            if (!keystorePath.isNullOrBlank() && !storePassword.isNullOrBlank() &&
+                !keyAlias.isNullOrBlank() && !keyPassword.isNullOrBlank()) {
+                storeFile = file(keystorePath)
+                this.storePassword = storePassword
+                this.keyAlias = keyAlias
+                this.keyPassword = keyPassword
+            }
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = false
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
