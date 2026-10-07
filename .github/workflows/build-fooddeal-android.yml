@@ -13,6 +13,9 @@ jobs:
     env:
       ANDROID_HOME: /usr/local/lib/android/sdk
       ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+      RELEASE_STORE_PASSWORD: fooddeal-build-only
+      RELEASE_KEY_PASSWORD: fooddeal-build-only
+      RELEASE_KEY_ALIAS: fooddeal
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -28,11 +31,18 @@ jobs:
           curl -L -o /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.7-bin.zip
           unzip -q /tmp/gradle.zip -d "$HOME"
           echo "$HOME/gradle-8.7/bin" >> "$GITHUB_PATH"
-      - name: Build APK
+      - name: Create temporary signing key
+        run: |
+          keytool -genkeypair -v             -keystore "$RUNNER_TEMP/fooddeal-release.jks"             -storepass "$RELEASE_STORE_PASSWORD"             -alias "$RELEASE_KEY_ALIAS"             -keypass "$RELEASE_KEY_PASSWORD"             -keyalg RSA -keysize 2048 -validity 3650             -dname "CN=FoodDeal, OU=Mobile, O=FoodDeal, L=Hyderabad, ST=Telangana, C=IN"
+      - name: Build signed release APK
         working-directory: fooddeal-android
-        run: gradle --no-daemon :app:assembleDebug
+        run: |
+          gradle --no-daemon :app:assembleRelease             -PRELEASE_STORE_FILE="$RUNNER_TEMP/fooddeal-release.jks"             -PRELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD"             -PRELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS"             -PRELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD"
+      - name: Verify APK signature
+        run: |
+          $ANDROID_HOME/build-tools/35.0.0/apksigner verify --verbose fooddeal-android/app/build/outputs/apk/release/app-release.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: FoodDeal-Companion-debug
-          path: fooddeal-android/app/build/outputs/apk/debug/app-debug.apk
+          name: FoodDeal-Companion-v1.0.1-signed
+          path: fooddeal-android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
